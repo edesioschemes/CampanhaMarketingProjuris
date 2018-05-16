@@ -58,16 +58,23 @@ INSERT INTO tb_permissao(id_permissao,
 
 INSERT INTO tb_usuario_x_grupo(id_usuario,id_grupo)VALUES(1,1);
 
+"151"	"Adminitrador"	"ADMINISTRADORES"
+"201"	"Usuários Comum"	"USUARIOS"
+"251"	"Backoffice - Cadastros"	"BACKOFFICE"
+
+"151"	"CADASTRO DE NOVOS USUÁRIOS"	"ROLE_CADASTROUSUARIO"
+"201"	"CONSULTA DE USUÁRIOS"	"ROLE_CONSULTAUSUARIO"
+"251"	"ADMINISTRAÇÂO COMPLETA"	"ROLE_ADMIN"
 
 
 /*ROLE_CADASTROUSUARIO x BACKOFFICE*/
-INSERT INTO tb_permissao_x_grupo(id_permissao,id_grupo)VALUES(1,201); 
+INSERT INTO tb_permissao_x_grupo(id_permissao,id_grupo)VALUES(151,251); 
 
 /*ROLE_CONSULTAUSUARIO x USUARIOS*/
-INSERT INTO tb_permissao_x_grupo(id_permissao,id_grupo)VALUES(51,151);
+INSERT INTO tb_permissao_x_grupo(id_permissao,id_grupo)VALUES(201,201);
 
 /*ROLE_ADMIN x ADMINISTRADORES*/
-INSERT INTO tb_permissao_x_grupo(id_permissao,id_grupo)VALUES(101,1);
+INSERT INTO tb_permissao_x_grupo(id_permissao,id_grupo)VALUES(251,151);
 
 
 

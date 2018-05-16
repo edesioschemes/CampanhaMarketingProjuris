@@ -4,8 +4,6 @@
 	  layout:decorator="@{~/base/layout}">
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<meta name="description" content="Blog www.ciceroednilson.com.br"/>
-	<meta name="author" content="Cícero Ednilson"/>
  
 	<title>Consultar Registros</title>
 </head>
@@ -47,7 +45,7 @@
 	    <td th:unless="${usuarioModel.ativo}" th:text="Não" class="mdl-data-table__cell--non-numeric"></td>
 	    <td>
 		<!-- REALIZANDO A REQUEST PARA EDITAR UM CADASTRO -->
-		<form action="#" th:action="@{../usuario/editarCadastro}" method="get">
+		<form action="#" th:action="@{../usuario/alterar}" method="get">
 		  <input type="hidden" name="codigoUsuario" th:value="${usuarioModel.codigo}" />					   			
 		  <button type="submit"  class="mdl-chip__action"><i class="material-icons">create</i></button>
 		</form>
