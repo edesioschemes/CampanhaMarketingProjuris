@@ -5,7 +5,7 @@
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
  
-	<title>Novo cadastro de usuário</title>
+	<title>Cadastro de Campanhas</title>
  
 	<script type="text/javascript"> 
 		function limparMensagem(){ 
@@ -16,28 +16,24 @@
 <body>
  
 	<section layout:fragment="content">
-	 
-		 <!-- MONTANDO O GRID PARA POSICIONAR O FORMULÁRIO NO CENTRO -->   
 		<div class="mdl-grid">   
-		 <div class="mdl-layout-spacer"></div>    
+		 <div class="mdl-layout-spacer"></div> 		   
 		 <section class="section--center mdl-grid mdl-shadow--4dp mdl-color--white">
 		 
 		 	<div class="mdl-cell mdl-cell--12-col">
 				<div class="alinhar-centro">
-				  <i class="material-icons mdl-list__item-avatar">person</i>
-				<span style="padding-left:5px;">Novo Cadastro de Usuário</span>			  
+				  <i class="material-icons mdl-list__item-avatar">book</i>
+				<span style="padding-left:5px;">Cadastro de Campanhas</span>			  
 				</div>
 			 
-				<form action="#" id="formulario-cadastro" th:action="@{../usuario/salvar}" th:object="${usuarioModel}" method="post">
+				<form action="#" id="formulario-cadastro" th:action="@{../campanha/salvar}" th:object="${campanhaModel}" method="post">
 					<fieldset>
 						<ul class="mdl-list">
 					 
-								<!-- MENSAGEM A SER MOSTRADA APÓS EXECUTARMOS O POST -->
 						 <li class="mdl-list__item" th:if="${msg_resultado}">						 	
 						 	<p id="p-mensagem-sucesso" class="sucesso-msg" th:text="${msg_resultado}" >...</p>		
 						 </li>
 					 
-						 <!-- CAMPO NOME -->
 						 <li class="mdl-list__item">			 		  
 							 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 							   <input class="mdl-textfield__input" type="text" id="input-nome" th:field="*{nome}" onfocus="limparMensagem()"/>
@@ -46,35 +42,29 @@
 							 </div>
 						 </li>
 					 
-						 <!-- CAMPO LOGIN -->
 						 <li class="mdl-list__item">
 							 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							   <input class="mdl-textfield__input" type="text" id="input-login" th:field="*{login}"/>
-							   <label class="mdl-textfield__label" for="input-login">Login...</label>
-							   <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="erro-msg">...</p>
+							   <input class="mdl-textfield__input" type="text" id="input-localizacao" th:field="*{localizacao}"/>
+							   <label class="mdl-textfield__label" for="input-localizacao">Localização...</label>
+							   <p th:if="${#fields.hasErrors('localizacao')}" th:errors="*{localizacao}" class="erro-msg">...</p>
 							 </div>
 						 </li>
-					 
-						<!-- CAMPO SENHA -->
 						<li class="mdl-list__item">
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							   	<input class="mdl-textfield__input" type="password" id="input-senha" th:field="*{senha}"/>
-							   	<label class="mdl-textfield__label" for="input-senha">Senha...</label>
-								<p th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="erro-msg">...</p>
-							</div>
-						</li>
-					 
+							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-ativo">
+								<input type="checkbox" id="checkbox-ativo" class="mdl-checkbox__input" name="ativo" th:checked="*{ativo}"/>
+								<span class="mdl-checkbox__label">Ativo</span>
+							</label>
+						</li>						 
 					 
 				 		</ul>
 					 </fieldset>
 				 
-				<div class="mdl-grid">
-				  <div class="mdl-layout-spacer"></div>
-				  <div>
-					<a th:href="@{/usuario/consultar}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancelar</a>				  
-				  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Salvar</button>
-				  </div>
-				 </div>  
+					<div class="mdl-grid">						  
+						  <div>
+							<a th:href="@{/campanha/consultar}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancelar</a>						  
+						  	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Salvar</button>
+						  </div>
+					 </div>  
 				</form>
 				 
 			</div>

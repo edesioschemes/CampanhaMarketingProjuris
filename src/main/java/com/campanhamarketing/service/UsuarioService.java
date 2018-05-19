@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,11 +37,13 @@ public class UsuarioService implements UserDetailsService {
 		if (!usuarioEntity.isAtivo())
 			throw new DisabledException("Usuário não está ativo no sistema!");
 
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		return new UsuarioSecurityModel(usuarioEntity.getLogin(), usuarioEntity.getSenha(), usuarioEntity.isAtivo(),
-				null);
+				authorities);
 	}
 
-	public void salvarUsuario(UsuarioModel usuarioModel) {
+	public void incluirUsuario(UsuarioModel usuarioModel) {
 
 		UsuarioEntity usuarioEntity = new UsuarioEntity();
 		usuarioEntity.setAtivo(true);
@@ -48,25 +52,6 @@ public class UsuarioService implements UserDetailsService {
 		usuarioEntity.setSenha(new BCryptPasswordEncoder().encode(usuarioModel.getSenha()));
 
 		this.usuarioRepository.save(usuarioEntity);
-	}
-
-	public List<UsuarioModel> consultarUsuarios() {
-
-		List<UsuarioModel> usuariosModel = new ArrayList<UsuarioModel>();
-		List<UsuarioEntity> usuariosEntity = this.usuarioRepository.findAll();
-		usuariosEntity.forEach(usuarioEntity -> {
-			usuariosModel.add(new UsuarioModel(usuarioEntity.getCodigo(), usuarioEntity.getNome(),
-					usuarioEntity.getLogin(), null, usuarioEntity.isAtivo()));
-		});
-		return usuariosModel;
-	}
-
-	public UsuarioModel consultarUsuario(Long codigoUsuario) {
-
-		Optional<UsuarioEntity> usuarioEntity = this.usuarioRepository.findById(codigoUsuario);
-		return new UsuarioModel(usuarioEntity.get().getCodigo(), usuarioEntity.get().getNome(),
-				usuarioEntity.get().getLogin(), null, usuarioEntity.get().isAtivo());
-
 	}
 
 	public void alterarUsuario(UsuarioModel usuarioModel) {
@@ -82,7 +67,26 @@ public class UsuarioService implements UserDetailsService {
 		this.usuarioRepository.saveAndFlush(usuarioEntity.get());
 	}
 
-	public void excluir(Long codigoUsuario) {
+	public UsuarioModel consultarUsuario(Long codigoUsuario) {
+
+		Optional<UsuarioEntity> usuarioEntity = this.usuarioRepository.findById(codigoUsuario);
+		return new UsuarioModel(usuarioEntity.get().getCodigo(), usuarioEntity.get().getNome(),
+				usuarioEntity.get().getLogin(), null, usuarioEntity.get().isAtivo());
+
+	}
+
+	public List<UsuarioModel> consultarUsuarios() {
+
+		List<UsuarioModel> usuariosModel = new ArrayList<UsuarioModel>();
+		List<UsuarioEntity> usuariosEntity = this.usuarioRepository.findAll();
+		usuariosEntity.forEach(usuarioEntity -> {
+			usuariosModel.add(new UsuarioModel(usuarioEntity.getCodigo(), usuarioEntity.getNome(),
+					usuarioEntity.getLogin(), null, usuarioEntity.isAtivo()));
+		});
+		return usuariosModel;
+	}
+
+	public void excluirUsuario(Long codigoUsuario) {
 		this.usuarioRepository.deleteById(codigoUsuario);
 	}
 }

@@ -39,7 +39,7 @@ public class UsuarioController {
 			model.addAttribute("usuarioModel", usuarioModel);
 			return new ModelAndView("incluirUsuario");
 		} else {
-			usuarioService.salvarUsuario(usuarioModel);
+			usuarioService.incluirUsuario(usuarioModel);
 		}
 
 		ModelAndView modelAndView = new ModelAndView("redirect:/usuario/incluir");
@@ -58,7 +58,7 @@ public class UsuarioController {
 	public ModelAndView excluir(@RequestParam("codigoUsuario") Long codigoUsuario) {
 
 		ModelAndView modelAndView = new ModelAndView("redirect:/usuario/consultar");
-		this.usuarioService.excluir(codigoUsuario);
+		this.usuarioService.excluirUsuario(codigoUsuario);
 		return modelAndView;
 	}
 
