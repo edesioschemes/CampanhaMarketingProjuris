@@ -23,17 +23,17 @@
 				<div class="mdl-layout__header-row">				
 				  	<i class="material-icons mdl-list__item-avatar">gavel</i>
 					<span class="mdl-layout-title" style="padding-left:5px;">Marketing Projuris</span>
-						   
-     
 					<div class="mdl-layout-spacer"></div>      
 					<nav class="mdl-navigation mdl-layout--large-screen-only">
 						<a class="mdl-navigation__link" th:href="@{/campanha/consultar}">Campanha</a>						
-						<a class="mdl-navigation__link" th:href="@{/usuario/consultar}">Usuário</a>							
+						<a class="mdl-navigation__link" th:href="@{/usuario/consultar}">Usuário</a>		
+						<a class="mdl-navigation__link" th:href="@{/visualizarCampanha}">Visualizar Campanha</a>					
 						<a class="mdl-navigation__link" href="#" onclick="document.getElementById('form_logou').submit();">Logout</a>        
 					</nav>
 				</div>
 			</header>
 			<main class="mdl-layout__content mdl-color--blue-grey-100">
+				<div id = "buttonId"></div>
 				<div class="page-content">
 					<div layout:fragment="content">Essa parte vai ser substituída </div>
 				</div>

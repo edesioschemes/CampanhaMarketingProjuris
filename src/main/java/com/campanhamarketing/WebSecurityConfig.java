@@ -23,9 +23,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests().antMatchers("/usuario/incluir").access("hasRole('ADMIN')")
-				.antMatchers("/usuario/consultar").access("hasRole('ADMIN')").antMatchers("/home").authenticated()
-				.anyRequest().authenticated().and().formLogin().loginPage("/").defaultSuccessUrl("/home", true)
-				.permitAll().and().logout().logoutSuccessUrl("/").logoutUrl("/logout").permitAll();
+				.antMatchers("/chamadaProjuris").access("hasRole('ADMIN')").antMatchers("/usuario/consultar")
+				.access("hasRole('ADMIN')").antMatchers("/home").authenticated().anyRequest().authenticated().and()
+				.formLogin().loginPage("/").defaultSuccessUrl("/home", true).permitAll().and().logout()
+				.logoutSuccessUrl("/").logoutUrl("/logout").permitAll();
 
 		http.exceptionHandling().accessDeniedPage("/acessoNegado");
 		http.authorizeRequests().antMatchers("/resources/**").permitAll().anyRequest().permitAll();

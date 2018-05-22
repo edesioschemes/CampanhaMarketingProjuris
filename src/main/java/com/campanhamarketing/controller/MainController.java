@@ -19,6 +19,12 @@ public class MainController {
 		return "home";
 	}
 
+	@RequestMapping(value = "/visualizarCampanha", method = RequestMethod.GET)
+	public String visualizarCampanha() {
+
+		return "visualizarCampanha";
+	}
+
 	@RequestMapping(value = "/acessoNegado", method = RequestMethod.GET)
 	public String acessoNegado() {
 

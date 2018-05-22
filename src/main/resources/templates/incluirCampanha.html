@@ -44,7 +44,7 @@
 					 
 						 <li class="mdl-list__item">
 							 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							   <input class="mdl-textfield__input" type="text" id="input-localizacao" th:field="*{localizacao}"/>
+							   <input class="mdl-textfield__input" type="url" id="input-localizacao" th:field="*{localizacao}"/>
 							   <label class="mdl-textfield__label" for="input-localizacao">Localização...</label>
 							   <p th:if="${#fields.hasErrors('localizacao')}" th:errors="*{localizacao}" class="erro-msg">...</p>
 							 </div>
