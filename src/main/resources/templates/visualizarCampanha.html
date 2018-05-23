@@ -9,57 +9,57 @@
          src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js"></script>	
 
 		<script type = "text/javascript">
-	
-         Ext.onReady(function() {
-            win = new Ext.Window ({
-                loader: {
-                    url: '/teste.html',
-                    scripts:false,
-                    discardUrl: true,
-                    autoLoad: true,
-                    },
-            	id: 'novidades',
-               	title:'Novidades da versão',
+		Ext.onReady(function() {
+			var dialogWindow = new Ext.Window({
+				id: 'novidades',
+				width: 600,
+				height: 400,
 				modal: false,
-				shadow: true,               	
+				shadow: true,
 				plain: true,
 				icon: '',
 				autoScroll: true,
 				layout: 'fit',
-				width: 600,
-				height: 400,
 				resizable: false,
 				collapsible: true,
 				animCollapse: false,
 				constrainHeader: true,
 				closable: true,
 				animate: false,
-				buttons: [{
-					xtype: "button", text: "Fechar", id: "btnFechar",
+				buttons: 
+					[{xtype: "button", text: "Fechar", id: "btnFechar",
 					handler  : function(){
-	                    win.hide();
-	                }},{
-					xtype: "button", text: "Fechar e não mostrar novamente", id: "btnMostrarNovamente",
-					handler  : function(){
-	                    win.hide();
-	                }
-				}],	
-				bodyBorder: true,
-               target : document.getElementById('janelaNovidade'),
-            });
-            win.show();
-         });
-      </script>
-        
+						dialogWindow.hide();
+                	}},
+					{xtype: "button", text: "Fechar e não mostrar novamente", id: "btnMostrarNovamente", 
+                	handler  : function(){
+						dialogWindow.hide();
+            		}}],
+				title: 'Novidades da versão',
+				bodyBorder: true,			
+			});
+			
+			var iframe = {
+		                id:'iframeid',
+		                tag:'iframe',
+		                src:'https://www.projuris.com.br/',
+		                width:'100%',
+		                height:'100%',
+		                frameborder:0
+		            };
+					
+			//dialogWindow.doLayout();
+			dialogWindow.show();
+			
+			//Ext.getDom('iframe-win').src = "http://www.yahoo.com";
+			//https://stackoverflow.com/questions/6025814/extjs-4-create-an-iframe-window
+			Ext.DomHelper.insertFirst(dialogWindow.body, iframe);
+		});
+      </script>        
 	</head>
 	<body>
-		<section layout:fragment="content">
-			<div class="mdl-grid">   
-				<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--4dp mdl-color--white">    	
-					<div id = "janelaNovidade"></div>    
-				</section>	
-				<div class="mdl-layout-spacer"></div>
-			</div>
-		</section>
+<p>
+  Now you are looking at a <span th:text="${campanhaModel.codigo}">template file</span>.
+</p>
 	</body>
 </html>

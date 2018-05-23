@@ -27,7 +27,7 @@
 					<nav class="mdl-navigation mdl-layout--large-screen-only">
 						<a class="mdl-navigation__link" th:href="@{/campanha/consultar}">Campanha</a>						
 						<a class="mdl-navigation__link" th:href="@{/usuario/consultar}">Usuário</a>		
-						<a class="mdl-navigation__link" th:href="@{/visualizarCampanha}">Visualizar Campanha</a>					
+						<a class="mdl-navigation__link" th:href="@{/campanha/consultarByStatus(statusCampanha=true)}">Visualizar Campanha</a>					
 						<a class="mdl-navigation__link" href="#" onclick="document.getElementById('form_logou').submit();">Logout</a>        
 					</nav>
 				</div>
@@ -35,7 +35,7 @@
 			<main class="mdl-layout__content mdl-color--blue-grey-100">
 				<div id = "buttonId"></div>
 				<div class="page-content">
-					<div layout:fragment="content">Essa parte vai ser substituída </div>
+					<div layout:fragment="content"></div>
 				</div>
   			</main>
 		</div>

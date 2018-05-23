@@ -58,7 +58,7 @@ public class CampanhaController {
 	public ModelAndView consultarByStatus(@RequestParam("statusCampanha") boolean ativo, Model model) {
 
 		model.addAttribute("campanhaModel", this.campanhaService.consultarCampanhasByStatus(ativo));
-		return new ModelAndView("consultarCampanha");
+		return new ModelAndView("visualizarCampanha");
 	}
 
 	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
