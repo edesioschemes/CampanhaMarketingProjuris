@@ -5,10 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Table(name = "campanha")
+@Table(name = "campanha", indexes = { @Index(name = "idx_localizacao", columnList = "ds_localizacao", unique = true) })
 @Entity
 public class CampanhaEntity {
 

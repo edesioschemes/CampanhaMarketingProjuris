@@ -58,6 +58,13 @@ public class CampanhaController {
 	public ModelAndView consultarByStatus(@RequestParam("statusCampanha") boolean ativo, Model model) {
 
 		model.addAttribute("campanhaModel", this.campanhaService.consultarCampanhasByStatus(ativo));
+		return new ModelAndView("consultarCampanha");
+	}
+
+	@RequestMapping(value = "/visualizarCampanha", method = RequestMethod.GET)
+	public ModelAndView visualizarCampanha(Model model) {
+
+		model.addAttribute("campanhaModel", this.campanhaService.consultarCampanhasByStatus(true));
 		return new ModelAndView("visualizarCampanha");
 	}
 

@@ -8,7 +8,10 @@
 	 
 	    <link  rel="stylesheet" th:href="@{/css/material.min.css}"/>
 	    <link  rel="stylesheet" th:href="@{/css/sistema.css}"/>
+	    <link  rel="stylesheet" th:href="@{/css/ext-all.css}"/>	    
 	 
+ 		<script type="text/javascript" th:src="@{/js/ext-base.js}"></script>
+ 		<script type="text/javascript" th:src="@{/js/ext-all.js}"></script>
 	    <script type="text/javascript" th:src="@{/js/material.min.js}"></script>
 	 
 	    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
@@ -27,7 +30,7 @@
 					<nav class="mdl-navigation mdl-layout--large-screen-only">
 						<a class="mdl-navigation__link" th:href="@{/campanha/consultar}">Campanha</a>						
 						<a class="mdl-navigation__link" th:href="@{/usuario/consultar}">Usuário</a>		
-						<a class="mdl-navigation__link" th:href="@{/campanha/consultarByStatus(statusCampanha=true)}">Visualizar Campanha</a>					
+						<a class="mdl-navigation__link" th:href="@{/campanha/visualizarCampanha}">Visualizar Campanha</a>					
 						<a class="mdl-navigation__link" href="#" onclick="document.getElementById('form_logou').submit();">Logout</a>        
 					</nav>
 				</div>

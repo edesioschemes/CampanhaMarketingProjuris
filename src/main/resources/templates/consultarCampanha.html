@@ -9,67 +9,62 @@
 	</head>
 	<body>
  
-	<section layout:fragment="content">
-		<div class="mdl-grid">   
-			   
-		    <section class="section--center mdl-grid mdl-shadow--4dp mdl-color--white">
- 
-			    <div class="mdl-cell mdl-cell--12-col">
-					<div class="alinhar-centro">
-						<i class="material-icons mdl-list__item-avatar">book</i>
-					   	<span style="padding-left:5px;">Consultar Campanhas</span>			  
-			       	</div>
-			       	
-					<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullwidth">
-
-						<thead>
-							<tr>
-								<th class="mdl-data-table__cell--non-numeric">Código</th>
-								<th class="mdl-data-table__cell--non-numeric">Nome</th>
-								<th class="mdl-data-table__cell--non-numeric">Localização</th>
-								<th class="mdl-data-table__cell--non-numeric">Ativo</th>
-								<th class="mdl-data-table__cell--non-numeric"></th>
-								<th class="mdl-data-table__cell--non-numeric"></th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>								
-							    <td>
-									<form action="#" th:action="@{../campanha/incluir}" method="get">				   			
-					  					<button type="submit"  class="mdl-chip__action"><i class="material-icons">add</i></button>
-									</form>
-			    				</td>								
-							</tr>
-						</tfoot>
-						<tbody>
-			
-							<th:block th:each="campanhaModel : ${campanhasModel}">
+		<section layout:fragment="content">
+			<div>   
+			    <section class="section--center mdl-grid mdl-shadow--4dp mdl-color--white">
+				    <div class="mdl-cell mdl-cell--12-col">
+						<div class="alinhar-centro">
+							<i class="material-icons mdl-list__item-avatar">book</i>
+						   	<span style="padding-left:5px;">Consultar Campanhas</span>			  
+				       	</div>
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+							<thead>
 								<tr>
-								    <td th:text="${campanhaModel.codigo}"></td>
-								    <td th:text="${campanhaModel.nome}" class="mdl-data-table__cell--non-numeric"></td>
-								    <td th:text="${campanhaModel.localizacao}" class="mdl-data-table__cell--non-numeric"></td>
-								    <td th:if="${campanhaModel.ativo}" th:text="Sim" class="mdl-data-table__cell--non-numeric"></td>
-								    <td th:unless="${campanhaModel.ativo}" th:text="Não" class="mdl-data-table__cell--non-numeric"></td>
+									<th class="mdl-data-table__cell--non-numeric">Código</th>
+									<th class="mdl-data-table__cell--non-numeric">Nome</th>
+									<th class="mdl-data-table__cell--non-numeric">Localização</th>
+									<th class="mdl-data-table__cell--non-numeric">Ativo</th>
+									<th class="mdl-data-table__cell--non-numeric"></th>
+									<th class="mdl-data-table__cell--non-numeric"></th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>								
 								    <td>
-										<form action="#" th:action="@{../campanha/alterar}" method="get">
-						  					<input type="hidden" name="codigoCampanha" th:value="${campanhaModel.codigo}" />					   			
-						  					<button type="submit"  class="mdl-chip__action"><i class="material-icons">create</i></button>
+										<form action="#" th:action="@{../campanha/incluir}" method="get">				   			
+						  					<button type="submit"  class="mdl-chip__action"><i class="material-icons">add</i></button>
 										</form>
-				    				</td>
-			            			<td>
-										<form action="#" th:action="@{../campanha/excluir}" method="post">					   			 
-										  	<input type="hidden" name="codigoCampanha" th:value="${campanhaModel.codigo}" />								 					   			 
-										  	<button type="submit"  class="mdl-chip__action" onclick="return confirm('Deseja realmente excluir esse registro?');"><i class="material-icons">delete</i></button>
-										</form>
-				    				</td>
-			         			</tr>
-			      			</th:block>	
-			   			</tbody>	
-					</table>
-				</div>
-			</section>	
-			<div class="mdl-layout-spacer"></div>
-		</div>
-	</section>
-</body>
+				    				</td>								
+								</tr>
+							</tfoot>
+							<tbody>
+								<th:block th:each="campanhaModel : ${campanhasModel}">
+									<tr>
+									    <td th:text="${campanhaModel.codigo}"></td>
+									    <td th:text="${campanhaModel.nome}" class="mdl-data-table__cell--non-numeric"></td>
+									    <td th:text="${campanhaModel.localizacao}" class="mdl-data-table__cell--non-numeric"></td>
+									    <td th:if="${campanhaModel.ativo}" th:text="Sim" class="mdl-data-table__cell--non-numeric"></td>
+									    <td th:unless="${campanhaModel.ativo}" th:text="Não" class="mdl-data-table__cell--non-numeric"></td>
+									    <td>
+											<form action="#" th:action="@{../campanha/alterar}" method="get">
+							  					<input type="hidden" name="codigoCampanha" th:value="${campanhaModel.codigo}" />					   			
+							  					<button type="submit"  class="mdl-chip__action"><i class="material-icons">create</i></button>
+											</form>
+					    				</td>
+				            			<td>
+											<form action="#" th:action="@{../campanha/excluir}" method="post">					   			 
+											  	<input type="hidden" name="codigoCampanha" th:value="${campanhaModel.codigo}" />								 					   			 
+											  	<button type="submit"  class="mdl-chip__action" onclick="return confirm('Deseja realmente excluir esse registro?');"><i class="material-icons">delete</i></button>
+											</form>
+					    				</td>
+				         			</tr>
+				      			</th:block>	
+				   			</tbody>	
+						</table>
+					
+					</div>
+				</section>	
+			</div>
+		</section>
+	</body>
 </html>

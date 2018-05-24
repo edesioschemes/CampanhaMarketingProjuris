@@ -25,7 +25,7 @@
 	   			<i class="material-icons mdl-list__item-avatar">person</i>
 	  			<span style="padding-left:5px;">Editar cadastro de Usuário</span>			  
         	</div>
-			<form action="#" id="formulario-cadastro" th:action="@{../usuario/salvar}" th:object="${usuarioModel}" method="post">
+			<form action="#" id="formulario-cadastro" th:action="@{../usuario/salvarAlteracao}" th:object="${usuarioModel}" method="post">
 				<fieldset>
 					<ul class="mdl-list">
 						<li class="mdl-list__item" th:if="${msg_resultado}">
@@ -67,7 +67,8 @@
 				</fieldset>			 
 				<div class="mdl-grid">
 					<div class="mdl-layout-spacer"></div>
-					<div class="mdl-cell mdl-cell--4-col" style="padding-right:10px;">
+					<div>
+						<a th:href="@{/usuario/consultar}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancelar</a>					
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Salvar</button>
 					</div>
 				</div>  

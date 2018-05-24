@@ -1,3 +1,8 @@
+CREATE UNIQUE INDEX id_localizacao
+    ON public.campanha USING btree
+    (ds_localizacao varchar_ops ASC NULLS LAST)
+    TABLESPACE pg_default;
+
 INSERT INTO tb_grupo(id_grupo,
                              ds_nome,
                              ds_descricao) 

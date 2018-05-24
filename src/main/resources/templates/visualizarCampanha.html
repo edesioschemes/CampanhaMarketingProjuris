@@ -1,65 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	  layout:decorate="base/layout">
-	<head>
-      	<link href = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-classic/resources/theme-classic-all.css" 
-         rel = "stylesheet" />
-      	<script type = "text/javascript" 
-         src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js"></script>	
-
+	  layout:decorator="@{~/base/layout}">
+	<head>       		
 		<script type = "text/javascript">
-		Ext.onReady(function() {
-			var dialogWindow = new Ext.Window({
-				id: 'novidades',
-				width: 600,
-				height: 400,
-				modal: false,
-				shadow: true,
-				plain: true,
-				icon: '',
-				autoScroll: true,
-				layout: 'fit',
-				resizable: false,
-				collapsible: true,
-				animCollapse: false,
-				constrainHeader: true,
-				closable: true,
-				animate: false,
-				buttons: 
-					[{xtype: "button", text: "Fechar", id: "btnFechar",
-					handler  : function(){
-						dialogWindow.hide();
-                	}},
-					{xtype: "button", text: "Fechar e não mostrar novamente", id: "btnMostrarNovamente", 
-                	handler  : function(){
-						dialogWindow.hide();
-            		}}],
-				title: 'Novidades da versão',
-				bodyBorder: true,			
+			Ext.onReady(function() {
+				var dialogWindow = new Ext.Window({
+					id: 'novidades',
+					width: 600,
+					height: 400,
+					modal: false,
+					shadow: true,
+					plain: true,
+					icon: '',
+					autoScroll: true,
+					layout: 'fit',
+					resizable: false,
+					collapsible: true,
+					animCollapse: false,
+					constrainHeader: true,
+					closable: true,
+					animate: false,
+					buttons: 
+						[{xtype: "button", text: "Fechar", id: "btnFechar",
+						handler  : function(){
+							dialogWindow.hide();
+	                	}},
+						{xtype: "button", text: "Fechar e não mostrar novamente", id: "btnMostrarNovamente", 
+	                	handler  : function(){
+							dialogWindow.hide();
+	            		}}],
+					title: 'Novidades da versão',
+					bodyBorder: true,			
+				});
+				
+				var iframe = {
+			                id:'iframeid',
+			                tag:'iframe',
+			                src:'',
+			                width:'100%',
+			                height:'100%',
+			                frameborder:0
+			            };
+						
+				dialogWindow.show();
+				
+				iframe.src = 'https://www.projuris.com.br/';
+				Ext.DomHelper.insertFirst(dialogWindow.body, iframe);
 			});
-			
-			var iframe = {
-		                id:'iframeid',
-		                tag:'iframe',
-		                src:'https://www.projuris.com.br/',
-		                width:'100%',
-		                height:'100%',
-		                frameborder:0
-		            };
-					
-			//dialogWindow.doLayout();
-			dialogWindow.show();
-			
-			//Ext.getDom('iframe-win').src = "http://www.yahoo.com";
-			//https://stackoverflow.com/questions/6025814/extjs-4-create-an-iframe-window
-			Ext.DomHelper.insertFirst(dialogWindow.body, iframe);
-		});
-      </script>        
+      	</script>        
 	</head>
 	<body>
-<p>
-  Now you are looking at a <span th:text="${campanhaModel.codigo}">template file</span>.
-</p>
+		<section layout:fragment="content">
+			<div class="mdl-grid">   
+				<div></div>    
+				<section>    	
+					<input type="hidden" name="codigoCampanha"/>   	
+				</section>	
+			</div>
+		</section>	
 	</body>
 </html>
