@@ -2,7 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorator="@{~/base/layout}">
-	<head>       		
+	<head> 
+	
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	
+	    var message = /*[[${campanhaModel}]]*/ 'default';
+	    console.log(message);
+	
+	/*]]>*/
+	</script>
+	      		
 		<script type = "text/javascript">
 			Ext.onReady(function() {
 				var dialogWindow = new Ext.Window({
@@ -45,19 +55,11 @@
 						
 				dialogWindow.show();
 				
-				iframe.src = 'https://www.projuris.com.br/';
+				iframe.src = message[0].localizacao;
 				Ext.DomHelper.insertFirst(dialogWindow.body, iframe);
 			});
       	</script>        
 	</head>
 	<body>
-		<section layout:fragment="content">
-			<div class="mdl-grid">   
-				<div></div>    
-				<section>    	
-					<input type="hidden" name="codigoCampanha"/>   	
-				</section>	
-			</div>
-		</section>	
 	</body>
 </html>
