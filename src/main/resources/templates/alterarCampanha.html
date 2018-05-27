@@ -21,7 +21,7 @@
 			   					<i class="material-icons mdl-list__item-avatar">book</i>
 			  					<span style="padding-left:5px;">Editar campanhas</span>			  
 		        			</div>
-							<form action="#" id="formulario-cadastro" th:action="@{../campanha/salvarAlteracao}" th:object="${campanhaModel}" method="post">
+							<form action="#" id="formulario-cadastro" th:action="@{../campanha/salvar}" th:object="${campanhaModel}" method="post">
 								<fieldset>
 									<ul class="mdl-list">
 										<li class="mdl-list__item" th:if="${msg_resultado}">

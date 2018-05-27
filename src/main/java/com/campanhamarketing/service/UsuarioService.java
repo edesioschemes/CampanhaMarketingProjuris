@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -45,26 +47,42 @@ public class UsuarioService implements UserDetailsService {
 
 	public void incluirUsuario(UsuarioModel usuarioModel) {
 
-		UsuarioEntity usuarioEntity = new UsuarioEntity();
-		usuarioEntity.setAtivo(true);
-		usuarioEntity.setLogin(usuarioModel.getLogin());
-		usuarioEntity.setNome(usuarioModel.getNome());
-		usuarioEntity.setSenha(new BCryptPasswordEncoder().encode(usuarioModel.getSenha()));
+		if (this.validarNomeUsuario(usuarioModel)) {
+			throw new PersistenceException("Nome de usuário ja existente.");
+		} else if (this.validarLoginUsuario(usuarioModel)) {
+			throw new PersistenceException("Login de usuário ja existente.");
+		} else {
+			UsuarioEntity usuarioEntity = new UsuarioEntity();
+			usuarioEntity.setAtivo(true);
+			usuarioEntity.setLogin(usuarioModel.getLogin());
+			usuarioEntity.setNome(usuarioModel.getNome());
+			usuarioEntity.setSenha(new BCryptPasswordEncoder().encode(usuarioModel.getSenha()));
 
-		this.usuarioRepository.save(usuarioEntity);
+			this.usuarioRepository.save(usuarioEntity);
+		}
 	}
 
 	public void alterarUsuario(UsuarioModel usuarioModel) {
 
-		Optional<UsuarioEntity> usuarioEntity = this.usuarioRepository.findById(usuarioModel.getCodigo());
-		usuarioEntity.get().setAtivo(usuarioModel.isAtivo());
-		usuarioEntity.get().setLogin(usuarioModel.getLogin());
-		usuarioEntity.get().setNome(usuarioModel.getNome());
-		if (!StringUtils.isEmpty(usuarioModel.getSenha())) {
-			usuarioEntity.get().setSenha(new BCryptPasswordEncoder().encode(usuarioModel.getSenha()));
-		}
+		if (this.validarNomeUsuario(usuarioModel)) {
+			throw new PersistenceException("Nome de usuário ja existente.");
+		} else if (this.validarLoginUsuario(usuarioModel)) {
+			throw new PersistenceException("Login de usuário ja existente.");
+		} else {
+			Optional<UsuarioEntity> usuarioEntity = this.usuarioRepository.findById(usuarioModel.getCodigo());
+			usuarioEntity.get().setAtivo(usuarioModel.isAtivo());
+			usuarioEntity.get().setLogin(usuarioModel.getLogin());
+			usuarioEntity.get().setNome(usuarioModel.getNome());
+			if (!StringUtils.isEmpty(usuarioModel.getSenha())) {
+				usuarioEntity.get().setSenha(new BCryptPasswordEncoder().encode(usuarioModel.getSenha()));
+			}
 
-		this.usuarioRepository.saveAndFlush(usuarioEntity.get());
+			this.usuarioRepository.saveAndFlush(usuarioEntity.get());
+		}
+	}
+
+	public void excluirUsuario(Long codigoUsuario) {
+		this.usuarioRepository.deleteById(codigoUsuario);
 	}
 
 	public UsuarioModel consultarUsuario(Long codigoUsuario) {
@@ -86,7 +104,18 @@ public class UsuarioService implements UserDetailsService {
 		return usuariosModel;
 	}
 
-	public void excluirUsuario(Long codigoUsuario) {
-		this.usuarioRepository.deleteById(codigoUsuario);
+	private boolean validarNomeUsuario(UsuarioModel usuarioModel) {
+		List<UsuarioModel> usuariosModel = this.consultarUsuarios();
+		return usuariosModel.stream()
+				.filter(usuario -> usuario.getCodigo() == null || !usuario.getCodigo().equals(usuarioModel.getCodigo()))
+				.anyMatch(usuario -> usuario.getNome().equalsIgnoreCase(usuarioModel.getNome()));
 	}
+
+	private boolean validarLoginUsuario(UsuarioModel usuarioModel) {
+		List<UsuarioModel> usuariosModel = this.consultarUsuarios();
+		return usuariosModel.stream()
+				.filter(usuario -> usuario.getCodigo() == null || !usuario.getCodigo().equals(usuarioModel.getCodigo()))
+				.anyMatch(usuario -> usuario.getLogin().equalsIgnoreCase(usuarioModel.getLogin()));
+	}
+
 }

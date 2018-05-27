@@ -1,12 +1,12 @@
 package com.campanhamarketing.controller;
 
+import javax.persistence.PersistenceException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,19 +31,11 @@ public class CampanhaController {
 		return new ModelAndView("incluirCampanha");
 	}
 
-	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ModelAndView salvar(@ModelAttribute @Valid CampanhaModel campanhaModel, final BindingResult result,
-			Model model, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
+	public ModelAndView excluir(@RequestParam("codigoCampanha") Long codigoCampanha) {
 
-		if (result.hasErrors()) {
-			model.addAttribute("campanhaModel", campanhaModel);
-			return new ModelAndView("incluirCampanha");
-		} else {
-			campanhaService.incluirCampanha(campanhaModel);
-		}
-
-		ModelAndView modelAndView = new ModelAndView("redirect:/campanha/incluir");
-		redirectAttributes.addFlashAttribute("msg_resultado", "Registro salvo com sucesso!");
+		ModelAndView modelAndView = new ModelAndView("redirect:/campanha/consultar");
+		this.campanhaService.excluirCampanha(codigoCampanha);
 		return modelAndView;
 	}
 
@@ -61,21 +53,6 @@ public class CampanhaController {
 		return new ModelAndView("consultarCampanha");
 	}
 
-	@RequestMapping(value = "/visualizarCampanha", method = RequestMethod.GET)
-	public ModelAndView visualizarCampanha(Model model) {
-
-		model.addAttribute("campanhaModel", this.campanhaService.consultarCampanhasByStatus(true));
-		return new ModelAndView("visualizarCampanha");
-	}
-
-	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
-	public ModelAndView excluir(@RequestParam("codigoCampanha") Long codigoCampanha) {
-
-		ModelAndView modelAndView = new ModelAndView("redirect:/campanha/consultar");
-		this.campanhaService.excluirCampanha(codigoCampanha);
-		return modelAndView;
-	}
-
 	@RequestMapping(value = "/alterar", method = RequestMethod.GET)
 	public ModelAndView alterar(@RequestParam("codigoCampanha") Long codigoCampanha, Model model) {
 
@@ -84,28 +61,45 @@ public class CampanhaController {
 		return new ModelAndView("alterarCampanha");
 	}
 
-	@RequestMapping(value = "/salvarAlteracao", method = RequestMethod.POST)
-	public ModelAndView salvarAlteracao(@ModelAttribute @Valid CampanhaModel campanhaModel, final BindingResult result,
+	@RequestMapping(value = "/visualizarCampanha", method = RequestMethod.GET)
+	public ModelAndView visualizarCampanha(Model model) {
+
+		model.addAttribute("campanhaModel", this.campanhaService.consultarCampanhasByStatus(true));
+		return new ModelAndView("visualizarCampanha");
+	}
+
+	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
+	public ModelAndView salvar(@ModelAttribute @Valid CampanhaModel campanhaModel, final BindingResult result,
 			Model model, RedirectAttributes redirectAttributes) {
 
-		boolean isErroNullCampos = false;
-
-		for (FieldError fieldError : result.getFieldErrors()) {
-			if (!fieldError.getField().equals("senha")) {
-				isErroNullCampos = true;
+		try {
+			if (campanhaModel.getCodigo() == null) {
+				if (result.hasErrors()) {
+					model.addAttribute("campanhaModel", campanhaModel);
+					return new ModelAndView("incluirCampanha");
+				} else {
+					campanhaService.incluirCampanha(campanhaModel);
+				}
+			} else {
+				if (result.hasErrors()) {
+					model.addAttribute("campanhaModel", campanhaModel);
+					return new ModelAndView("alterarCampanha");
+				}
+				campanhaService.alterarCampanha(campanhaModel);
 			}
+			ModelAndView modelAndView = new ModelAndView("redirect:/campanha/consultar");
+			return modelAndView;
+		} catch (PersistenceException e) {
+			ModelAndView modelAndView;
+			if (campanhaModel.getCodigo() == null) {
+				modelAndView = new ModelAndView("incluirCampanha");
+			} else {
+				modelAndView = new ModelAndView("alterarCampanha");
+			}
+			modelAndView.addObject("msg_resultado", e.getMessage());
+			return modelAndView;
 		}
 
-		if (isErroNullCampos) {
-			model.addAttribute("campanhaModel", campanhaModel);
-			return new ModelAndView("alterarCampanha");
-		} else {
-			campanhaService.alterarCampanha(campanhaModel);
-		}
-
-		ModelAndView modelAndView = new ModelAndView("redirect:/campanha/consultar");
-
-		return modelAndView;
 	}
 
 }

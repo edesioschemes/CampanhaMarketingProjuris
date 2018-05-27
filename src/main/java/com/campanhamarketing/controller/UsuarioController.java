@@ -1,5 +1,6 @@
 package com.campanhamarketing.controller;
 
+import javax.persistence.PersistenceException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +32,11 @@ public class UsuarioController {
 		return new ModelAndView("incluirUsuario");
 	}
 
-	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ModelAndView salvar(@ModelAttribute @Valid UsuarioModel usuarioModel, final BindingResult result,
-			Model model, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
+	public ModelAndView excluir(@RequestParam("codigoUsuario") Long codigoUsuario) {
 
-		if (result.hasErrors()) {
-			model.addAttribute("usuarioModel", usuarioModel);
-			return new ModelAndView("incluirUsuario");
-		} else {
-			usuarioService.incluirUsuario(usuarioModel);
-		}
-
-		ModelAndView modelAndView = new ModelAndView("redirect:/usuario/incluir");
-		redirectAttributes.addFlashAttribute("msg_resultado", "Registro salvo com sucesso!");
+		ModelAndView modelAndView = new ModelAndView("redirect:/usuario/consultar");
+		this.usuarioService.excluirUsuario(codigoUsuario);
 		return modelAndView;
 	}
 
@@ -54,14 +47,6 @@ public class UsuarioController {
 		return new ModelAndView("consultarUsuario");
 	}
 
-	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
-	public ModelAndView excluir(@RequestParam("codigoUsuario") Long codigoUsuario) {
-
-		ModelAndView modelAndView = new ModelAndView("redirect:/usuario/consultar");
-		this.usuarioService.excluirUsuario(codigoUsuario);
-		return modelAndView;
-	}
-
 	@RequestMapping(value = "/alterar", method = RequestMethod.GET)
 	public ModelAndView alterar(@RequestParam("codigoUsuario") Long codigoUsuario, Model model) {
 
@@ -70,27 +55,46 @@ public class UsuarioController {
 		return new ModelAndView("alterarUsuario");
 	}
 
-	@RequestMapping(value = "/salvarAlteracao", method = RequestMethod.POST)
-	public ModelAndView salvarAlteracao(@ModelAttribute @Valid UsuarioModel usuarioModel, final BindingResult result,
+	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
+	public ModelAndView salvar(@ModelAttribute @Valid UsuarioModel usuarioModel, final BindingResult result,
 			Model model, RedirectAttributes redirectAttributes) {
 
-		boolean isErroNullCampos = false;
+		try {
+			if (usuarioModel.getCodigo() == null) {
+				if (result.hasErrors()) {
+					model.addAttribute("usuarioModel", usuarioModel);
+					return new ModelAndView("incluirUsuario");
+				} else {
+					usuarioService.incluirUsuario(usuarioModel);
+				}
+			} else {
+				boolean isErroNullCampos = false;
 
-		for (FieldError fieldError : result.getFieldErrors()) {
-			if (!fieldError.getField().equals("senha")) {
-				isErroNullCampos = true;
+				for (FieldError fieldError : result.getFieldErrors()) {
+					if (!fieldError.getField().equals("senha")) {
+						isErroNullCampos = true;
+					}
+				}
+				if (isErroNullCampos) {
+					model.addAttribute("usuarioModel", usuarioModel);
+					return new ModelAndView("alterarUsuario");
+				} else {
+					usuarioService.alterarUsuario(usuarioModel);
+				}
 			}
+			ModelAndView modelAndView = new ModelAndView("redirect:/usuario/consultar");
+			return modelAndView;
+		} catch (PersistenceException e) {
+			ModelAndView modelAndView;
+			if (usuarioModel.getCodigo() == null) {
+				modelAndView = new ModelAndView("incluirUsuario");
+			} else {
+				modelAndView = new ModelAndView("alterarUsuario");
+			}
+			modelAndView.addObject("msg_resultado", e.getMessage());
+			return modelAndView;
 		}
 
-		if (isErroNullCampos) {
-			model.addAttribute("usuarioModel", usuarioModel);
-			return new ModelAndView("alterarUsuario");
-		} else {
-			usuarioService.alterarUsuario(usuarioModel);
-		}
-
-		ModelAndView modelAndView = new ModelAndView("redirect:/usuario/consultar");
-
-		return modelAndView;
 	}
+
 }
