@@ -7,9 +7,6 @@ import java.util.Optional;
 import javax.persistence.PersistenceException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.campanhamarketing.entity.CampanhaEntity;
@@ -17,19 +14,10 @@ import com.campanhamarketing.model.CampanhaModel;
 import com.campanhamarketing.repository.CampanhaRepository;
 
 @Component
-public class CampanhaService implements UserDetailsService {
+public class CampanhaService {
 
 	@Autowired
 	private CampanhaRepository campanhaRepository;
-
-	@Autowired
-	private UsuarioService usuarioService;
-
-	@Override
-	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-
-		return usuarioService.loadUserByUsername(login);
-	}
 
 	public void incluirCampanha(CampanhaModel campanhaModel) {
 		if (this.validarNomeCampanha(campanhaModel)) {
