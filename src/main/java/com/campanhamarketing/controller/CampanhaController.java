@@ -61,13 +61,6 @@ public class CampanhaController {
 		return new ModelAndView("alterarCampanha");
 	}
 
-	@RequestMapping(value = "/visualizarCampanha", method = RequestMethod.GET)
-	public ModelAndView visualizarCampanha(Model model) {
-
-		model.addAttribute("campanhaModel", this.campanhaService.consultarCampanhasByStatus(true));
-		return new ModelAndView("visualizarCampanha");
-	}
-
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute @Valid CampanhaModel campanhaModel, final BindingResult result,
 			Model model, RedirectAttributes redirectAttributes) {

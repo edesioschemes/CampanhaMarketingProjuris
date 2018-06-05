@@ -12,6 +12,6 @@ public interface CampanhaClienteRepository extends JpaRepository<CampanhaCliente
 
 	CampanhaClienteEntity findBySiglaCliente(String siglaCliente);
 
-	CampanhaClienteEntity findByIdCampanhaBySiglaCliente(Long idCampanha, String siglaCliente);
+	CampanhaClienteEntity findByIdCampanhaAndSiglaCliente(Long idCampanha, String siglaCliente);
 
 }

@@ -85,6 +85,18 @@ public class CampanhaService {
 		return campanhaModel;
 	}
 
+	public CampanhaModel consultarPrimeiraCampanhaAtiva() {
+
+		List<CampanhaModel> campanhaModelList = this.consultarCampanhasByStatus(true);
+
+		if (campanhaModelList.isEmpty()) {
+			return new CampanhaModel();
+		} else {
+			return campanhaModelList.get(0);
+		}
+
+	}
+
 	private boolean validarNomeCampanha(CampanhaModel campanhaModel) {
 		List<CampanhaModel> campanhasModel = this.consultarCampanhas();
 		return campanhasModel.stream().filter(
