@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().antMatchers("/usuario/incluir").access("hasRole('ADMIN')")
 				.antMatchers("/chamadaProjuris").access("hasRole('ADMIN')").antMatchers("/usuario/consultar")
-				.access("hasRole('ADMIN')").antMatchers("/home").authenticated().anyRequest().authenticated().and()
+				.access("hasRole('ADMIN')").antMatchers("/campanhacliente/salvar/").access("hasRole('ADMIN')").antMatchers("/home").authenticated().anyRequest().authenticated().and()
 				.formLogin().loginPage("/").defaultSuccessUrl("/home", true).permitAll().and().logout()
 				.logoutSuccessUrl("/").logoutUrl("/logout").permitAll();
 
