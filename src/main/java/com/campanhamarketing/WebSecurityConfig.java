@@ -22,6 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
+		http.csrf().disable();
+
 		http.authorizeRequests().antMatchers("/usuario/incluir").access("hasRole('ADMIN')")
 				.antMatchers("/chamadaProjuris").access("hasRole('ADMIN')").antMatchers("/usuario/consultar")
 				.access("hasRole('ADMIN')").antMatchers("/home").authenticated().anyRequest().authenticated().and()

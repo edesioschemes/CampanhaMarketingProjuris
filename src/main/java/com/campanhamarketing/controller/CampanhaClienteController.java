@@ -28,7 +28,7 @@ public class CampanhaClienteController {
 	}
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public void salvar(@RequestParam Long idCampanha, @RequestParam String siglaCliente) {
+	public void salvar(@RequestParam("idCampanha") Long idCampanha, @RequestParam("siglaCliente") String siglaCliente) {
 
 		this.campanhaClienteService.incluirCampanhaCliente(idCampanha, siglaCliente);
 
