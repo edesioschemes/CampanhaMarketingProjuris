@@ -18,19 +18,20 @@ public class CampanhaClienteController {
 	private CampanhaClienteService campanhaClienteService;
 
 	@RequestMapping(value = "/visualizarCampanha", method = RequestMethod.GET)
-	public ModelAndView consultar(Long idCampanha, String siglaCliente, Model model) {
+	public ModelAndView consultar(Long idCampanha, Long idUsuario, String siglaCliente, Model model) {
 
-		model.addAttribute("campanhaModel",
-				this.campanhaClienteService.consultarCampanhaClienteByIdCampanhaSigla(idCampanha, siglaCliente));
+		model.addAttribute("campanhaClienteModel", this.campanhaClienteService
+				.consultarCampanhaClienteByIdCampanhaSigla(idCampanha, idUsuario, siglaCliente));
 
 		return new ModelAndView("visualizarCampanha");
 
 	}
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public void salvar(@RequestParam("idCampanha") Long idCampanha, @RequestParam("siglaCliente") String siglaCliente) {
+	public void salvar(@RequestParam("idCampanha") Long idCampanha, @RequestParam("idUsuario") Long idUsuario,
+			@RequestParam("siglaCliente") String siglaCliente) {
 
-		this.campanhaClienteService.incluirCampanhaCliente(idCampanha, siglaCliente);
+		this.campanhaClienteService.incluirCampanhaCliente(idCampanha, idUsuario, siglaCliente);
 
 	}
 

@@ -7,8 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-@Table(name = "campanhaCliente")
+@Table(name = "campanhaCliente", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "id_campanha_cliente", "id_campanha", "id_usuario", "ds_sigla_cliente" }) })
 @Entity
 public class CampanhaClienteEntity {
 
@@ -20,10 +22,13 @@ public class CampanhaClienteEntity {
 	@Column(name = "id_campanha_cliente")
 	private Long codigo;
 
-	@Column(name = "id_campanha")
+	@Column(name = "id_campanha", nullable = false)
 	private Long idCampanha;
 
-	@Column(name = "ds_sigla_cliente")
+	@Column(name = "id_usuario", nullable = false)
+	private Long idUsuario;
+
+	@Column(name = "ds_sigla_cliente", nullable = false)
 	private String siglaCliente;
 
 	public Long getCodigo() {
@@ -32,6 +37,14 @@ public class CampanhaClienteEntity {
 
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
+	}
+
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public Long getIdCampanha() {

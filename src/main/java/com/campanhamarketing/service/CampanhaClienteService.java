@@ -16,21 +16,25 @@ public class CampanhaClienteService {
 	@Autowired
 	CampanhaService campanhaService;
 
-	public void incluirCampanhaCliente(Long idCampanha, String siglaCliente) {
+	public void incluirCampanhaCliente(Long idCampanha, Long idUsuario, String siglaCliente) {
 
-		if (this.consultarCampanhaClienteByIdCampanhaSigla(idCampanha, siglaCliente) == null) {
-			CampanhaClienteEntity campanhaClienteEntity = new CampanhaClienteEntity();
-			campanhaClienteEntity.setIdCampanha(idCampanha);
-			campanhaClienteEntity.setSiglaCliente(siglaCliente);
+		CampanhaModel campanhaModel = this.consultarCampanhaClienteByIdCampanhaSigla(idCampanha, idUsuario,
+				siglaCliente);
 
-			this.campanhaClienteRepository.save(campanhaClienteEntity);
-		}
+		CampanhaClienteEntity campanhaClienteEntity = new CampanhaClienteEntity();
+		campanhaClienteEntity.setIdCampanha(idCampanha);
+		campanhaClienteEntity.setIdUsuario(idUsuario);
+		campanhaClienteEntity.setSiglaCliente(siglaCliente);
+
+		this.campanhaClienteRepository.save(campanhaClienteEntity);
+
 	}
 
-	public CampanhaModel consultarCampanhaClienteByIdCampanhaSigla(Long idCampanha, String siglaCliente) {
+	public CampanhaModel consultarCampanhaClienteByIdCampanhaSigla(Long idCampanha, Long idUsuario,
+			String siglaCliente) {
 
 		CampanhaClienteEntity campanhaClienteEntity = this.campanhaClienteRepository
-				.findByIdCampanhaAndSiglaCliente(idCampanha, siglaCliente);
+				.findByIdCampanhaAndIdUsuarioAndSiglaCliente(idCampanha, idUsuario, siglaCliente);
 
 		if (campanhaClienteEntity == null) {
 			return this.campanhaService.consultarPrimeiraCampanhaAtiva();

@@ -20,13 +20,13 @@ public class UsuarioEntity {
 	@Column(name = "id_usuario")
 	private Long codigo;
 
-	@Column(name = "ds_nome")
+	@Column(name = "ds_nome", nullable = false)
 	private String nome;
 
-	@Column(name = "ds_login")
+	@Column(name = "ds_login", nullable = false)
 	private String login;
 
-	@Column(name = "ds_senha")
+	@Column(name = "ds_senha", nullable = false)
 	private String senha;
 
 	@Column(name = "fl_ativo")

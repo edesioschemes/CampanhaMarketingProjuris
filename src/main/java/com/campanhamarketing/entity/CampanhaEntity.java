@@ -20,10 +20,10 @@ public class CampanhaEntity {
 	@Column(name = "id_campanha")
 	private Long codigo;
 
-	@Column(name = "ds_nome")
+	@Column(name = "ds_nome", nullable = false)
 	private String nome;
 
-	@Column(name = "ds_localizacao")
+	@Column(name = "ds_localizacao", nullable = false)
 	private String localizacao;
 
 	@Column(name = "fl_ativo")

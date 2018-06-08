@@ -10,18 +10,17 @@
          
          
 	<script th:inline="javascript">
-	/*<![CDATA[*/
-	
-	    var message = /*[[${campanhaModel}]]*/ 'default';	
+		/*<![CDATA[*/	
+	    var message = /*[[${campanhaClienteModel}]]*/ 'default';	
 		/*]]>*/
 		</script>
 		
 		<script th:inline="javascript">
-                /*<![CDATA[*/
-			var url = /*[('"' + @{/campanhacliente/salvar/} + '"')]*/ '';
+        /*<![CDATA[*/
+		var url = /*[('"' + @{/campanhacliente/salvar/} + '"')]*/ '';
 			//"@{'/users/doDelete/'${user.id}}"
-	/*]]>*/
-	</script>
+		/*]]>*/
+		</script>
 	      		
 		<script type = "text/javascript">
 			Ext.onReady(function() {
@@ -73,11 +72,18 @@
 			function post_to() {
 				
 			    var form = document.createElement('form');
+			    
 			    var campanha = document.createElement("input");
 			    campanha.name="idCampanha";
-			    campanha.value = 0;
+			    campanha.value = message.codigo;
 			    campanha.type = 'hidden';
 			    form.appendChild(campanha);
+			    
+			    var usuario = document.createElement("input");
+			    usuario.name="idUsuario";
+			    usuario.value = 0;
+			    usuario.type = 'hidden';
+			    form.appendChild(usuario);			    
 			    
 			    var siglaCliente = document.createElement("input");
 			    siglaCliente.name="siglaCliente";

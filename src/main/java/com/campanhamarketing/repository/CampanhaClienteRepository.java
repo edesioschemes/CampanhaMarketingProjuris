@@ -10,8 +10,11 @@ public interface CampanhaClienteRepository extends JpaRepository<CampanhaCliente
 
 	CampanhaClienteEntity findByIdCampanha(Long idCampanha);
 
+	CampanhaClienteEntity findByIdUsuario(Long idUsuario);
+
 	CampanhaClienteEntity findBySiglaCliente(String siglaCliente);
 
-	CampanhaClienteEntity findByIdCampanhaAndSiglaCliente(Long idCampanha, String siglaCliente);
+	CampanhaClienteEntity findByIdCampanhaAndIdUsuarioAndSiglaCliente(Long idCampanha, Long idUsuario,
+			String siglaCliente);
 
 }
