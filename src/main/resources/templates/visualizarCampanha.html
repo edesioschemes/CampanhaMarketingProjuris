@@ -13,6 +13,13 @@
 	/*<![CDATA[*/
 	
 	    var message = /*[[${campanhaModel}]]*/ 'default';	
+		/*]]>*/
+		</script>
+		
+		<script th:inline="javascript">
+                /*<![CDATA[*/
+			var url = /*[('"' + @{/campanhacliente/salvar/} + '"')]*/ '';
+			//"@{'/users/doDelete/'${user.id}}"
 	/*]]>*/
 	</script>
 	      		
@@ -41,7 +48,7 @@
 	                	}},
 						{xtype: "button", text: "Fechar e não mostrar novamente", id: "btnMostrarNovamente", 
 	                	handler  : function(){
-	                		th:src = message.localizacao;
+	                		post_to();
 							dialogWindow.hide();
 	            		}}],
 					title: 'Novidades da versão',
@@ -62,6 +69,28 @@
 				iframe.src = message.localizacao;
 				Ext.DomHelper.insertFirst(dialogWindow.body, iframe);
 			});
+			
+			function post_to() {
+				
+			    var form = document.createElement('form');
+			    var campanha = document.createElement("input");
+			    campanha.name="idCampanha";
+			    campanha.value = 0;
+			    campanha.type = 'hidden';
+			    form.appendChild(campanha);
+			    
+			    var siglaCliente = document.createElement("input");
+			    siglaCliente.name="siglaCliente";
+			    siglaCliente.value = "0";
+			    siglaCliente.type = 'hidden';			    
+			    form.appendChild(siglaCliente);			    
+			    
+			    document.body.appendChild(form);
+			    form.action = url;
+			    form.method = 'POST';
+			    
+			    form.submit();				
+			}
       	</script>        
 	</head>
 	<body>
