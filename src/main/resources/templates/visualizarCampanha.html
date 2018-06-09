@@ -9,11 +9,17 @@
          src = "https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js"></script>
          
          
-	<script th:inline="javascript">
+		<script th:inline="javascript">
 		/*<![CDATA[*/	
-	    var message = /*[[${campanhaClienteModel}]]*/ 'default';	
+	    var message = /*[[${campanhaModel}]]*/ 'default';	
 		/*]]>*/
 		</script>
+		
+		<script th:inline="javascript">
+		/*<![CDATA[*/	
+	    var msg_resultado = /*[[${msg_resultado}]]*/ 'default';	
+		/*]]>*/
+		</script>		
 		
 		<script th:inline="javascript">
         /*<![CDATA[*/
@@ -63,10 +69,12 @@
 			                frameborder:0
 			            };
 						
-				dialogWindow.show();
-				
-				iframe.src = message.localizacao;
-				Ext.DomHelper.insertFirst(dialogWindow.body, iframe);
+				if (message != null) {
+					dialogWindow.show();
+					
+					iframe.src = message.localizacao;
+					Ext.DomHelper.insertFirst(dialogWindow.body, iframe);
+				}
 			});
 			
 			function post_to() {
